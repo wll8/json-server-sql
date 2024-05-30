@@ -49,11 +49,11 @@
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
-    "commitlint": "^18.4.3",
     "@types/jest": "^27.5.2",
     "@types/node": "^12.20.11",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "commitlint": "^18.4.3",
     "conventional-changelog-conventionalcommits": "^5.0.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
@@ -117,5 +117,9 @@
       "@semantic-release/npm",
       "@semantic-release/github"
     ]
+  },
+  "dependencies": {
+    "mysql2": "^3.9.9",
+    "sequelize": "^6.37.3"
   }
 }
