@@ -1,5 +1,5 @@
 import type { Sequelize } from 'sequelize';
-import type { IService, Item } from './type';
+import type { IQuery, IService, Item } from './type';
 
 export default class Service implements IService {
   #db: any;
@@ -9,10 +9,16 @@ export default class Service implements IService {
     this.sequelize = this.#db.sequelize;
   }
 
-  // async find(name: string, query: IQuery) {
-  //   console.log('todo', name, query);
-  //   return { name: 123 };
-  // }
+  async find(name: string, query: IQuery) {
+    query._limit = Number(query._limit) || 10;
+    query._page = Number(query._page) || 1;
+
+    const infos = await this.sequelize.models[name].findAll<any>({
+      limit: query._limit,
+      offset: (query._page - 1) * query._limit,
+    });
+    return infos;
+  }
 
   async findById(name: string, id: string) {
     const info = await this.sequelize.models[name].findByPk<any>(id);
@@ -52,4 +58,7 @@ export default class Service implements IService {
     await model.destroy<any>({ where: { id } });
     return info;
   }
+}
+export interface ServiceConstructor {
+  new (db: any): Service;
 }

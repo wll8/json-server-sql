@@ -1,6 +1,15 @@
 import DataToModel from '../src/transform-model/data-to-model';
-import sequelize from '../src/app/database';
+import connect from '../src/app/database';
+
 describe('dataToModel', () => {
+  const sequelize = connect({
+    host: 'localhost',
+    port: 3306,
+    database: 'demos',
+    username: 'root',
+    password: 'root',
+    dialect: 'mysql',
+  });
   const dataToModel = new DataToModel(sequelize);
   it('测试dataToModels', () => {
     const data = {
