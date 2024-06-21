@@ -64,7 +64,8 @@ function createApp(db: DataBase, options: { service: ServiceConstructor }) {
       data: res.locals['data'],
     });
   });
-  app.put('/:name/:id', async (req, res) => {
+
+  app.patch('/:name/:id', async (req, res) => {
     const { name = '', id = '' } = req.params;
     if (isObject(req.body)) {
       res.locals['data'] = await service.updateById(name, id, req.body);
@@ -74,6 +75,7 @@ function createApp(db: DataBase, options: { service: ServiceConstructor }) {
       data: res.locals['data'],
     });
   });
+
   app.delete('/:name/:id', async (req, res, next) => {
     const { name = '', id = '' } = req.params;
     res.locals['data'] = await service.destroyById(name, id);

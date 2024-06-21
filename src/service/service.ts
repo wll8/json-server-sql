@@ -29,9 +29,11 @@ export default class Service implements IService {
     return info;
   }
 
-  // async update(name: string, data: Item) {
-  //   return undefined;
-  // }
+  // 更加全部数据更新数据库数据
+  async update(name: string, data: Item) {
+    const id = data['id'] as string;
+    return this.updateById(name, id, data);
+  }
 
   // async patch(name: string, data: Item) {
   //   console.log('todo', name, data);
@@ -58,6 +60,7 @@ export default class Service implements IService {
     await model.destroy<any>({ where: { id } });
     return info;
   }
+  // 注入方式
 }
 export interface ServiceConstructor {
   new (db: any): Service;
