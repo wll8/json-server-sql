@@ -21,6 +21,7 @@ function createApp(db: DataBase, options: { service: ServiceConstructor }) {
   const service = new Service(db);
   const app = express();
   app.use(cors());
+  app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.get('/:name', async (req, res, next) => {
     const { name = '' } = req.params;
@@ -63,7 +64,24 @@ function createApp(db: DataBase, options: { service: ServiceConstructor }) {
       data: res.locals['data'],
     });
   });
-
+  app.put('/:name/:id', async (req, res) => {
+    const { name = '', id = '' } = req.params;
+    if (isObject(req.body)) {
+      res.locals['data'] = await service.updateById(name, id, req.body);
+    }
+    res.json({
+      code: 0,
+      data: res.locals['data'],
+    });
+  });
+  app.delete('/:name/:id', async (req, res, next) => {
+    const { name = '', id = '' } = req.params;
+    res.locals['data'] = await service.destroyById(name, id);
+    res.json({
+      code: 0,
+      data: res.locals['data'],
+    });
+  });
   return app;
 }
 
